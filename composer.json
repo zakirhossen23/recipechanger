@@ -1,0 +1,11 @@
+{
+    "name": "vendor/recipechanger",
+    "description": "Recipe Changer Shopit Miseit Makeit",
+    "authors": [
+        {
+            "name": "Zakir Hossen",
+            "email": "73053667+zakirhossen23@users.noreply.github.com"
+        }
+    ],
+    "require": {}
+}
