@@ -5,3 +5,9 @@
 .wp-image-3781 {
     vertical-align: middle;
 }
+.wp-block-columns {
+    display: flex;
+    margin-bottom: 1.75em;
+    box-sizing: border-box;
+    flex-wrap: nowrap;
+}
