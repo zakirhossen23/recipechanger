@@ -12,7 +12,7 @@ function contains(selector, text) {
 var Sourceelm = document.createElement("div");
 Sourceelm.className = "has-text-align-center has-large-font-size";
 Sourceelm.id = "ShopIt"
-Sourceelm.innerHTML = '<div class=""><div><img loading="lazy" width="104" height="104" id="shopitimage" class="wp-image-3671" style="width: 52px;height: 56px;" src="undefined" alt="Mise It!" srcset="https://shopitmiseitmakeit.ca/wp-content/uploads/2021/12/Mini-Cart.jpg" sizes="(max-width: 104px) 100vw, 104px"> <span>Shop It!</span></div><button id="shopitprintbtn" onclick="shopitprint()" style="float: right;margin-top: -8%;height: 45px;font-size: 26px;width: 90px;" class="">Print</button></div>';
+Sourceelm.innerHTML = '<div id="ShopIt"><div style="text-align: center;height: 73px;" id="ShopIt"><button id="shopitprintbtn" onclick="shopitprint()" style="float: right; height: 45px; font-size: 26px; width: 90px;" class="">Print</button><div><img loading="lazy" id="miseitimage" style="width: 52px;height: 56px; vertical-align: middle;" alt="Mise It!" srcset="https://shopitmiseitmakeit.ca/wp-content/uploads/2021/12/Mini-Cart.jpg" src="undefined"> Shop It!</div></div></div>';
 
 try {
     document.getElementsByClassName("rcps-instructions")[0].insertAdjacentElement('afterbegin', Sourceelm);
