@@ -5,6 +5,9 @@ function contains(selector, text) {
         return RegExp(text).test(element.textContent);
     });
 }
+function sleep(milliseconds) {  
+    return new Promise(resolve => setTimeout(resolve, milliseconds));  
+ }
 
 // //Shop it button
 
@@ -28,10 +31,16 @@ async function shopitprint() {
     newwindow.document.write(document.getElementsByClassName("rcps-instructions")[0].outerHTML);
     await sleep(200);
     newwindow.document.write('<script type="text/javascript" src="https://shopitmiseitmakeit.ca/wp-content/plugins/recipechanger/includes/print/shopit.js?." id="shopit"></script>')
+ 
     shopitbtn.style.display = "";
 }
 
-
+//Converting all numbers into image
+var allNumbers = document.getElementsByClassName("numbers")
+while (allNumbers.length !== 0) {
+     let numberid = allNumbers[0].innerText;
+    allNumbers[0].outerHTML = '<img src="https://shopitmiseitmakeit.ca/wp-content/uploads/transparent-'+numberid+'.png"/>'
+}
 //Mise it button
 
 //Adding Mise IT Button and Icon
@@ -50,6 +59,7 @@ async function miseitprint() {
     newwindow.document.write(document.getElementsByClassName("rcps-instructions")[0].outerHTML);
     await sleep(200);
     newwindow.document.write('<script type="text/javascript" src="https://shopitmiseitmakeit.ca/wp-content/plugins/recipechanger/includes/print/miseit.js?." id="miseit"></script>')
+  
     miseitbtn.style.display = "";
 }
 
