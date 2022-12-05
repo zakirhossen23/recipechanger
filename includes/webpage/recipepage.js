@@ -5,9 +5,9 @@ function contains(selector, text) {
         return RegExp(text).test(element.textContent);
     });
 }
-function sleep(milliseconds) {  
-    return new Promise(resolve => setTimeout(resolve, milliseconds));  
- }
+function sleep(milliseconds) {
+    return new Promise(resolve => setTimeout(resolve, milliseconds));
+}
 
 // //Shop it button
 
@@ -31,15 +31,15 @@ async function shopitprint() {
     newwindow.document.write(document.getElementsByClassName("rcps-instructions")[0].outerHTML);
     await sleep(200);
     newwindow.document.write('<script type="text/javascript" src="https://shopitmiseitmakeit.ca/wp-content/plugins/recipechanger/includes/print/shopit.js?." id="shopit"></script>')
- 
+
     shopitbtn.style.display = "";
 }
 
 //Converting all numbers into image
 var allNumbers = document.getElementsByClassName("numbers")
 while (allNumbers.length !== 0) {
-     let numberid = allNumbers[0].innerText;
-    allNumbers[0].outerHTML = '<img src="https://shopitmiseitmakeit.ca/wp-content/uploads/transparent-'+numberid+'.png"/>'
+    let numberid = allNumbers[0].innerText;
+    allNumbers[0].outerHTML = '<img src="https://shopitmiseitmakeit.ca/wp-content/uploads/transparent-' + numberid + '.png"/>'
 }
 //Mise it button
 
@@ -59,7 +59,7 @@ async function miseitprint() {
     newwindow.document.write(document.getElementsByClassName("rcps-instructions")[0].outerHTML);
     await sleep(200);
     newwindow.document.write('<script type="text/javascript" src="https://shopitmiseitmakeit.ca/wp-content/plugins/recipechanger/includes/print/miseit.js?." id="miseit"></script>')
-  
+
     miseitbtn.style.display = "";
 }
 
@@ -86,3 +86,111 @@ async function makeitprint() {
     newwindow.document.write('<script type="text/javascript" src="https://shopitmiseitmakeit.ca/wp-content/plugins/recipechanger/includes/print/makeit.js?." id="miseit"></script>')
     makeitbtn.style.display = "";
 }
+
+
+
+/**
+* Update Shopit Box
+*/
+var ingredient_tables = document.querySelectorAll('table.rcps-table-ingredients ');
+var all_tables_asiles = [];
+function updateShopitInforamtions() {
+    all_tables_asiles = [];
+    for (let i = 0; i < ingredient_tables.length; i++) {
+        var tables_asile = ingredient_tables[i].children[0].children
+
+        var one_table_data = [];
+        for (let i = 0; i < tables_asile.length; i++) {
+            one_table_data.push([tables_asile[i].children[1].innerText, tables_asile[i].children[2].innerText, tables_asile[i].children[3].firstChild.checked])
+
+        }
+        all_tables_asiles.push(one_table_data)
+    }
+}
+
+/**
+* Update Have It
+*/
+function updateHaveIt() {
+    updateShopitInforamtions();
+    let total_buy_need = 0.00;
+    for (let i = 0; i < all_tables_asiles.length; i++) {
+        const element = all_tables_asiles[i];
+        for (let ai = 0; ai < element.length; ai++) {
+            const asile = element[ai];
+            if (asile[2] === false) {
+                total_buy_need += Number(asile[1]);
+            }
+        }
+    }
+    document.querySelector("#shopit-buy-need").innerHTML = `\$${total_buy_need.toFixed(2)}`;
+    return total_buy_need.toFixed(2);
+}
+
+
+
+/**
+* Update Total Cost
+*/
+function updateTotalCost() {
+    updateShopitInforamtions();
+    let total_cost_ingredients = 0.00;
+    for (let i = 0; i < all_tables_asiles.length; i++) {
+        const element = all_tables_asiles[i];
+        for (let ai = 0; ai < element.length; ai++) {
+            const asile = element[ai];
+            total_cost_ingredients += Number(asile[1]);
+            
+        }
+    }
+    document.querySelector("#shopit-all-ingredients").innerHTML = `\$${total_cost_ingredients.toFixed(2)}`;
+    return total_cost_ingredients.toFixed(2);
+}
+
+
+/**
+* Update Cost Per Serving
+*/
+function updateCostPerServing() {
+    updateShopitInforamtions();
+    let total_cost_per_serving = 0.00;
+    total_cost_per_serving = updateHaveIt() /Number(document.querySelector("#total_servings").value);
+  
+    document.querySelector("#shopit-per-serving").innerHTML = `\$${total_cost_per_serving.toFixed(2)}`;
+    return total_cost_per_serving.toFixed(2);
+}
+
+
+
+
+/**
+* Update Overbuy and Pantry Investment
+*/
+function updateOverbuyInvestment() {
+    updateShopitInforamtions();
+    let total_overbuy = 0;
+    let total_overbuy_in_percent = 0;
+    let total_ingredients = 0;
+
+    for (let i = 0; i < all_tables_asiles.length; i++) {
+        const element = all_tables_asiles[i];
+        for (let ai = 0; ai < element.length; ai++) {
+            const asile = element[ai];
+            total_ingredients+=1;
+            if (asile[0] === "*"&& asile[2]=== false) {
+                total_overbuy += 1;
+            }
+        }
+    }
+
+    total_overbuy_in_percent = (total_overbuy/ total_ingredients) * 100;
+    
+    document.querySelector("#shopit-overbuy-investment").innerHTML = `${total_overbuy_in_percent.toFixed(2)}%`;
+    return total_overbuy_in_percent;
+}
+
+
+updateHaveIt();
+updateTotalCost();
+updateCostPerServing();
+updateOverbuyInvestment();
