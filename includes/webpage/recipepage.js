@@ -30,7 +30,7 @@ async function shopitprint() {
     newwindow.document.write(document.getElementsByTagName("head")[0].outerHTML);
     newwindow.document.write(document.getElementsByClassName("rcps-instructions")[0].outerHTML);
     await sleep(200);
-    newwindow.document.write('<script type="text/javascript" src="https://shopitmiseitmakeit.ca/wp-content/plugins/recipechanger/includes/print/shopit.js?." id="shopit"></script>')
+    newwindow.document.write('<script type="text/javascript" src="https://shopitmiseitmakeit.ca/wp-content/plugins/recipechanger/includes/print/shopit.js" id="shopit"></script>')
 
     shopitbtn.style.display = "";
 }
